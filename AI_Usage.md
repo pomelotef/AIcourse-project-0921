@@ -1,3 +1,6 @@
+##This is a first draft, not the finished product.
+
+
 Section 1 — What AI tools we plan to use, and what we will use each for
 
 "We will use Claude Sonnet (via the API) for generating boilerplate CRUD endpoints and first-draft unit tests — not for anything touching authentication or payment logic, which a human writes from scratch."
