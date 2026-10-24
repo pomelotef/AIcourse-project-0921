@@ -1,1 +1,1 @@
-# AIcourse-project-team01
+# AIcourse-project-team02
