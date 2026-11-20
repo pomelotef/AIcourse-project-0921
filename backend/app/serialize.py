@@ -2,6 +2,7 @@
 
 from sqlalchemy.orm import Session
 
+from .routers.common import is_overdue, taipei_today
 from .models import (
     ActionItem,
     ActivityEvent,
@@ -24,6 +25,7 @@ class Ser:
         self._users: dict[int, dict] = {}
         self._goals: dict[int, Goal | None] = {}
         self._meetings: dict[int, Meeting | None] = {}
+        self.today = taipei_today()
 
     # ---- references ----
     def user(self, uid: int | None) -> dict | None:
@@ -139,6 +141,7 @@ class Ser:
             "created_at": a.created_at,
             "updated_at": a.updated_at,
             "closed_at": a.closed_at,
+            "overdue": is_overdue(a, self.today),
         }
 
     def meeting(self, m: Meeting) -> dict:

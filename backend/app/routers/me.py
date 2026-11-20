@@ -23,16 +23,11 @@ from ..models import (
 )
 from ..security import current_user
 from ..serialize import Ser
-from .common import action_sort_key, is_overdue
+from .common import action_sort_key, is_overdue, taipei_today
 
 router = APIRouter(prefix="/api/me", tags=["me"])
 
 BLOCKER_ATTENTION_DAYS = 7
-
-
-def _taipei_today():
-    # Due dates are calendar dates; the team and pilot users are in Taiwan (UTC+8).
-    return (utcnow() + timedelta(hours=8)).date()
 
 
 def _my_projects(db: Session, user: User, role: str | None = None) -> list[tuple[Project, str]]:
@@ -52,7 +47,7 @@ def home(db: Session = Depends(get_db), user: User = Depends(current_user)):
     projects = _my_projects(db, user)
     project_ids = [p.id for p, _ in projects]
     advisor_project_ids = [p.id for p, r in projects if r == "advisor"]
-    today = _taipei_today()
+    today = taipei_today()
 
     goals = (
         db.query(Goal)
@@ -145,28 +140,33 @@ def home(db: Session = Depends(get_db), user: User = Depends(current_user)):
         .all()
     )
 
-    last_meetings = []
-    for p, _ in projects:
-        m = (
-            db.query(Meeting)
-            .filter(Meeting.project_id == p.id, Meeting.occurred_at <= utcnow())
-            .order_by(Meeting.occurred_at.desc())
-            .first()
-        )
-        if m:
-            last_meetings.append({**ser.meeting(m), "project_title": p.title})
+    # Latest past meeting per project and category (lab / industry threads stay apart),
+    # plus meetings already scheduled for the future.
+    last_meetings, upcoming_meetings = [], []
+    titles = {p.id: p.title for p, _ in projects}
+    seen: set[tuple[int, str]] = set()
+    for m in (
+        db.query(Meeting).filter(Meeting.project_id.in_(project_ids)).order_by(Meeting.occurred_at.desc()).all()
+    ):
+        if m.occurred_at > utcnow():
+            upcoming_meetings.append({**ser.meeting(m), "project_title": titles[m.project_id]})
+        elif (m.project_id, m.category) not in seen:
+            seen.add((m.project_id, m.category))
+            last_meetings.append({**ser.meeting(m), "project_title": titles[m.project_id]})
+    upcoming_meetings.reverse()
 
     return {
         "projects": [{"id": p.id, "title": p.title, "state": p.state, "my_role": r} for p, r in projects],
         "is_advisor": bool(advisor_project_ids),
         "my_goals": my_goals,
-        "my_actions": [{**ser.action(a), "overdue": is_overdue(a, today)} for a in actions],
+        "my_actions": [ser.action(a) for a in actions],
         "my_open_blockers": [ser.blocker(b) for b in blockers],
         "recent_feedback": [ser.outcome(o) for o in feedback],
         "pending_confirmation": [ser.outcome(o) for o in pending_confirmation],
         "drafts": [ser.update(u) for u in drafts],
         "recent_updates": [ser.update(u) for u in recent_updates],
         "last_meetings": last_meetings,
+        "upcoming_meetings": upcoming_meetings,
     }
 
 
@@ -184,7 +184,7 @@ def overview(
     """
     ser = Ser(db)
     now = utcnow()
-    today = _taipei_today()
+    today = taipei_today()
     projects = [p for p, _ in _my_projects(db, user, role="advisor")]
     pids = [p.id for p in projects]
 
