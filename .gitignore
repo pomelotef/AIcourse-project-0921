@@ -23,3 +23,4 @@ e2e/.e2e-data/
 Thumbs.db
 .vscode/
 .idea/
+*.tsbuildinfo

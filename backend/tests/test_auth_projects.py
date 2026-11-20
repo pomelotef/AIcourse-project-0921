@@ -54,3 +54,10 @@ def test_membership_and_roles(lab):
     prof.delete(f"/api/projects/{pid}/members/{lab['ids']['prof']}", status=400)
     prof.patch(f"/api/projects/{pid}/members/{lab['ids']['prof']}", {"role": "student"}, status=400)
 
+
+def test_student_can_start_solo_project(make_user):
+    s, _ = make_user("solo")
+    p = s.post("/api/projects", {"title": "My thesis", "creator_role": "student"}, status=201)
+    assert p["my_role"] == "student"
+    g = s.post(f"/api/projects/{p['id']}/goals", {"title": "Q1", "assignee_id": p["members"][0]["id"]}, status=201)
+    assert g["assignee"]["name"] == "solo"
