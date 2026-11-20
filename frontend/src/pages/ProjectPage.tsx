@@ -179,7 +179,9 @@ function MeetingForm({ project, onCancel }: { project: Project; onCancel: () => 
   const { user } = useAuth()
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState<MeetingCategory>('lab')
-  const [when, setWhen] = useState(toLocalInput(new Date()))
+  // Round up to the next minute: the input drops seconds, and the brief only counts
+  // updates published up to the meeting time, so "now" must not cut off the last minute.
+  const [when, setWhen] = useState(toLocalInput(new Date(Date.now() + 60_000)))
   const [agenda, setAgenda] = useState('')
   const [participants, setParticipants] = useState<number[]>(project.members.map((m) => m.id))
   const { busy, error, run } = useSubmit()

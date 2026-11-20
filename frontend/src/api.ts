@@ -19,7 +19,13 @@ async function request<T>(method: string, url: string, body?: unknown): Promise<
     throw new ApiError(0, '無法連線到伺服器，請確認後端已啟動')
   }
   const text = await res.text()
-  const data = text ? JSON.parse(text) : null
+  let data: any = null
+  try {
+    data = text ? JSON.parse(text) : null
+  } catch {
+    if (!res.ok) throw new ApiError(res.status, `伺服器錯誤（${res.status}），請稍後再試`)
+    throw new ApiError(res.status, '伺服器回應格式錯誤')
+  }
   if (!res.ok) {
     const detail = data && typeof data.detail === 'string' ? data.detail : `請求失敗（${res.status}）`
     if (res.status === 401) window.dispatchEvent(new Event('labpulse:unauthorized'))
