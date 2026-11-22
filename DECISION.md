@@ -43,6 +43,9 @@
 **What:** `app/__init__.py` 預設設定 `DISABLE_SQLALCHEMY_CEXT_RUNTIME=1`；所有指令透過 `uv run python manage.py …` 與 `uv run python -m pytest` 執行。
 **Why:** 組員電腦上的 Windows 智慧型應用程式控制會擋下 SQLAlchemy 未簽章的 C 擴充與 `.venv` 裡的 exe。MVP 的資料量下效能差異可以忽略。
 
+## 2026-11-20 — code steward
+**What:** SamTsai0316 is the code steward for this PR.
+**Why:** Volunteered
 ## 2026-11-22 — 加入選用的 AI 會前摘要
 **What:** Meeting 頁面新增「AI 會前摘要」：把該場 Meeting Brief 的紀錄交給模型，產生 1–3 句摘要與最多 6 個討論重點（阻礙、需要決定、待追蹤、進度），每一點都標出依據的紀錄。AI 只負責整理與引用，所有決策仍由教授在 meeting 中做；`Draft_Evaluation_Plan.md` 的 Human-AI boundary 同步改為「AI 只做摘要與引用，決策由人做」。
 **Why:** 對應評估計畫的成功定義「會前準備時間減少 10%」，也補上 CP2 的 AI 元件。
