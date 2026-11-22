@@ -2,11 +2,12 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
-from .routers import actions, auth, goals, me, meetings, projects, timeline, updates
+from . import live  # noqa: F401  (registers the ORM hooks that drive live refresh)
+from .routers import actions, auth, goals, live as live_router, me, meetings, projects, timeline, updates
 
 app = FastAPI(title="LabPulse API", version="0.1.0")
 
-for r in (auth, projects, goals, updates, actions, meetings, timeline, me):
+for r in (auth, projects, goals, updates, actions, meetings, timeline, me, live_router):
     app.include_router(r.router)
 
 

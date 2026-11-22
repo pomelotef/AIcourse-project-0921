@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { LIVE_EVENT } from './live'
 
 export function fmtDate(iso: string | null | undefined): string {
   if (!iso) return '—'
@@ -36,9 +37,10 @@ export function useAsync<T>(fn: () => Promise<T>, deps: unknown[]) {
   fnRef.current = fn
   const seq = useRef(0)
 
-  const reload = useCallback(async () => {
+  // silent: background refresh from live updates; keep showing the current data, no spinner.
+  const reload = useCallback(async (opts?: { silent?: boolean }) => {
     const mine = ++seq.current
-    setLoading(true)
+    if (!opts?.silent) setLoading(true)
     try {
       const value = await fnRef.current()
       if (mine === seq.current) {
@@ -54,6 +56,11 @@ export function useAsync<T>(fn: () => Promise<T>, deps: unknown[]) {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { void reload() }, deps)
+  useEffect(() => {
+    const refresh = () => { void reload({ silent: true }) }
+    window.addEventListener(LIVE_EVENT, refresh)
+    return () => window.removeEventListener(LIVE_EVENT, refresh)
+  }, [reload])
   return { data, error, loading, reload }
 }
 

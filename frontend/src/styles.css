@@ -39,6 +39,11 @@ p { margin: .3rem 0; }
 .topbar nav a { padding: .3rem .65rem; border-radius: 6px; color: var(--muted); }
 .topbar nav a.active { background: var(--accent-soft); color: var(--accent); }
 .user { display: flex; gap: .5rem; align-items: center; }
+.live-dot { display: inline-flex; align-items: center; gap: .35rem; font-size: .8rem; color: var(--muted); }
+.live-dot::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: var(--muted); }
+.live-live::before { background: var(--ok); }
+.live-offline { color: var(--danger); }
+.live-offline::before { background: var(--danger); }
 .page { max-width: 1120px; margin: 0 auto; padding: 1.2rem 16px 3rem; }
 .stack { display: flex; flex-direction: column; gap: 1rem; }
 .page-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
