@@ -42,3 +42,7 @@
 ## 2026-11-20 — Windows 上改用 SQLAlchemy 純 Python 實作
 **What:** `app/__init__.py` 預設設定 `DISABLE_SQLALCHEMY_CEXT_RUNTIME=1`；所有指令透過 `uv run python manage.py …` 與 `uv run python -m pytest` 執行。
 **Why:** 組員電腦上的 Windows 智慧型應用程式控制會擋下 SQLAlchemy 未簽章的 C 擴充與 `.venv` 裡的 exe。MVP 的資料量下效能差異可以忽略。
+
+## 2026-11-20 — code steward
+**What:** SamTsai0316 is the code steward for this PR.
+**Why:** Volunteered
