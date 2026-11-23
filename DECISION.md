@@ -44,8 +44,9 @@
 **Why:** 組員電腦上的 Windows 智慧型應用程式控制會擋下 SQLAlchemy 未簽章的 C 擴充與 `.venv` 裡的 exe。MVP 的資料量下效能差異可以忽略。
 
 ## 2026-11-20 — code steward
-**What:** SamTsai0316 is the code steward for this PR.
+**What:** SamTsai0316 is the code steward for this PR#13.
 **Why:** Volunteered
+
 ## 2026-11-22 — 加入選用的 AI 會前摘要
 **What:** Meeting 頁面新增「AI 會前摘要」：把該場 Meeting Brief 的紀錄交給模型，產生 1–3 句摘要與最多 6 個討論重點（阻礙、需要決定、待追蹤、進度），每一點都標出依據的紀錄。AI 只負責整理與引用，所有決策仍由教授在 meeting 中做；`Draft_Evaluation_Plan.md` 的 Human-AI boundary 同步改為「AI 只做摘要與引用，決策由人做」。
 **Why:** 對應評估計畫的成功定義「會前準備時間減少 10%」，也補上 CP2 的 AI 元件。
@@ -69,3 +70,8 @@
 ## 2026-11-22 — AI 摘要的兩層測試
 **What:** 第 1 層：`test_brief_summary.py` 與 `test_ai_summary_api.py` 用假模型，隨 CI 執行，不需要金鑰。第 2 層：`promptfoo/brief_summary/` 用真模型手動執行，至少 10 個案例、`--repeat 3`、一次修正循環；每個案例的預期行為由全組在第一次執行前寫好。
 **Why:** 權限、驗證、退回這些程式行為必須每次都一樣，所以用假模型測。模型的回覆有隨機性，要重複執行才算證據。這也對應 CP2 的 prompt 測試套件要求。
+
+## 2026-11-22 — code steward
+**What:** AlanCheng1000 is the code steward for this PR (Commit 3bf4669).
+**Why:** Volunteered
+
