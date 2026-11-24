@@ -27,6 +27,8 @@ from sqlalchemy.orm import Session
 
 from .models import (
     ActivityEvent,
+    Blocker,
+    ExternalLink,
     Goal,
     Meeting,
     MeetingOutcome,
@@ -131,6 +133,9 @@ def _touches_for(obj, deleted: bool) -> list[Touch]:
         return [("outcome", obj.outcome_id, None)]
     if isinstance(obj, UpdateBlocker):
         return [("update", obj.update_id, None)]
+    if isinstance(obj, ExternalLink):
+        # A link is as private as what it hangs on (a private goal, a draft update).
+        return [(f"link-{obj.target_type}", obj.target_id, None)]
     project_id = getattr(obj, "project_id", None)
     return [("project", project_id, None)] if project_id is not None else []
 
@@ -166,18 +171,42 @@ def _dispatch(session: Session) -> None:
 
 
 def _recipients(db: Session, pending: set[Touch]) -> dict[int, dict]:
+    # Each resolver returns (project_id, only_user): the parent row decides who may see the change.
+    def update_scope(i: int) -> tuple[int | None, int | None]:
+        u = db.get(ProgressUpdate, i)  # a draft (and whatever hangs off it) is still the author's alone
+        if u is None:
+            return None, None
+        return u.project_id, (u.author_id if u.publication_state == "draft" else None)
+
+    def goal_scope(i: int) -> tuple[int | None, int | None]:
+        g = db.get(Goal, i)
+        if g is None:
+            return None, None
+        return g.project_id, (g.created_by if g.visibility == "private" else None)
+
     parents = {
-        "meeting": lambda i: db.scalar(select(Meeting.project_id).where(Meeting.id == i)),
-        "outcome": lambda i: db.scalar(
-            select(Meeting.project_id).join(MeetingOutcome, MeetingOutcome.meeting_id == Meeting.id)
-            .where(MeetingOutcome.id == i)
+        "meeting": lambda i: (db.scalar(select(Meeting.project_id).where(Meeting.id == i)), None),
+        "outcome": lambda i: (
+            db.scalar(
+                select(Meeting.project_id)
+                .join(MeetingOutcome, MeetingOutcome.meeting_id == Meeting.id)
+                .where(MeetingOutcome.id == i)
+            ),
+            None,
         ),
-        "update": lambda i: db.scalar(select(ProgressUpdate.project_id).where(ProgressUpdate.id == i)),
+        "update": update_scope,
+        "link-update": update_scope,
+        "link-goal": goal_scope,
+        "link-blocker": lambda i: (db.scalar(select(Blocker.project_id).where(Blocker.id == i)), None),
     }
     per_user: dict[int, set[int]] = {}
     members_cache: dict[int, list[int]] = {}
     for kind, ident, only_user in pending:
-        pid = ident if kind == "project" else parents[kind](ident)
+        if kind == "project":
+            pid = ident
+        else:
+            pid, scoped = parents[kind](ident)
+            only_user = only_user if only_user is not None else scoped
         if pid is None:
             continue
         if only_user is not None:

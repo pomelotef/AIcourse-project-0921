@@ -80,6 +80,25 @@ def test_private_rows_only_reach_their_author(lab, listen):
     assert listen.notified() == {"prof", "alice", "bob"}
 
 
+def test_link_on_private_goal_only_reaches_its_author(lab, listen):
+    goal = _goal(lab, visibility="private")
+    listen.drain()
+    lab["alice"].post("/api/links", {"target_type": "goal", "target_id": goal["id"], "url": "https://example.com"},
+                      status=201)
+    assert listen.notified() == {"alice"}
+
+
+def test_draft_citing_a_blocker_only_reaches_its_author(lab, listen):
+    goal = _goal(lab)
+    up = lab["bob"].post(f"/api/goals/{goal['id']}/updates",
+                         {"completed": "x", "new_blockers": [{"title": "GPU"}], "publish": True}, status=201)
+    listen.drain()
+    lab["alice"].post(f"/api/goals/{goal['id']}/updates",
+                      {"completed": "wip", "referenced_blocker_ids": [up["blockers"][0]["id"]], "publish": False},
+                      status=201)
+    assert listen.notified() == {"alice"}
+
+
 def test_writes_without_activity_events_still_notify(lab, listen):
     goal = _goal(lab)
     listen.drain()

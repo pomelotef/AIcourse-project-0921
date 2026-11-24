@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { ApiError } from './api'
 import { LIVE_EVENT } from './live'
 
 export function fmtDate(iso: string | null | undefined): string {
@@ -48,7 +49,11 @@ export function useAsync<T>(fn: () => Promise<T>, deps: unknown[]) {
         setError(null)
       }
     } catch (e) {
-      if (mine === seq.current) setError(e instanceof Error ? e.message : String(e))
+      if (mine === seq.current) {
+        setError(e instanceof Error ? e.message : String(e))
+        // Gone or no longer visible (a goal made private, removed from the project): drop the old copy.
+        if (opts?.silent && e instanceof ApiError && (e.status === 404 || e.status === 403)) setData(null)
+      }
     } finally {
       if (mine === seq.current) setLoading(false)
     }
