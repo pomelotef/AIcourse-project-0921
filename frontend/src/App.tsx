@@ -1,6 +1,7 @@
 import { NavLink, Route, Routes } from 'react-router-dom'
 import { AuthProvider, useAuth } from './auth'
 import { Loading } from './components/ui'
+import { LiveIndicator, LiveProvider } from './live'
 import GoalPage from './pages/GoalPage'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -22,7 +23,7 @@ function Shell() {
   if (!ready) return <main className="page"><Loading /></main>
   if (!user) return <Login />
   return (
-    <>
+    <LiveProvider>
       <header className="topbar">
         <div className="topbar-inner">
           <NavLink to="/" className="brand">LabPulse</NavLink>
@@ -32,6 +33,7 @@ function Shell() {
             <NavLink to="/projects">專案</NavLink>
           </nav>
           <div className="user">
+            <LiveIndicator />
             <span className="muted">{user.name}</span>
             <button className="ghost small" onClick={() => void logout()}>登出</button>
           </div>
@@ -48,6 +50,6 @@ function Shell() {
           <Route path="*" element={<p>找不到此頁面</p>} />
         </Routes>
       </main>
-    </>
+    </LiveProvider>
   )
 }

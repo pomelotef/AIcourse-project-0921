@@ -38,7 +38,11 @@ def main() -> None:
     elif args.cmd == "serve":
         import uvicorn
 
-        uvicorn.run("app.main:app", host=args.host, port=args.port, reload=args.reload)
+        # Open live-refresh streams never finish on their own; without a timeout Ctrl+C would wait for
+        # every browser tab to close.
+        uvicorn.run(
+            "app.main:app", host=args.host, port=args.port, reload=args.reload, timeout_graceful_shutdown=2
+        )
     else:  # pragma: no cover
         sys.exit(2)
 
