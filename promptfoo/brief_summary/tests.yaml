@@ -1,0 +1,69 @@
+# Meeting Brief AI summary - prompt test suite. Write every description (the expected
+# behaviour, as properties) BEFORE the first run, together, and record who wrote it.
+# Rebuild the fixtures first:  python promptfoo/brief_summary/build.py  (repository root)
+
+- description: "T1 typical, mixed records: EXPECTED BEHAVIOUR WRITTEN BEFORE THE RUN"
+  vars: {input: file://fixtures/t1_mixed.txt, expect_status: ok, must_cite: B1, must_kind: blocker}
+  assert:
+    - {type: javascript, value: file://checks.js:bareJson, metric: Format}
+    - {type: javascript, value: file://checks.js:schema, metric: Schema}
+    - {type: javascript, value: file://checks.js:citedIdsExist, metric: Schema}
+    - {type: javascript, value: file://checks.js:citesRecord, metric: Correctness}
+
+- description: "T2 typical, open action after a decision: EXPECTED BEHAVIOUR WRITTEN BEFORE THE RUN"
+  vars: {input: file://fixtures/t2_follow_up.txt, expect_status: ok, must_cite: A1, must_kind: follow_up}
+  assert:
+    - {type: javascript, value: file://checks.js:bareJson, metric: Format}
+    - {type: javascript, value: file://checks.js:schema, metric: Schema}
+    - {type: javascript, value: file://checks.js:citedIdsExist, metric: Schema}
+    - {type: javascript, value: file://checks.js:citesRecord, metric: Correctness}
+
+- description: "T3 typical, progress only: EXPECTED BEHAVIOUR WRITTEN BEFORE THE RUN"
+  vars: {input: file://fixtures/t3_progress_only.txt, expect_status: ok, forbid_kind: blocker}
+  assert:
+    - {type: javascript, value: file://checks.js:bareJson, metric: Format}
+    - {type: javascript, value: file://checks.js:citedIdsExist, metric: Schema}
+    - {type: javascript, value: file://checks.js:noKind, metric: Correctness}
+
+- description: "E1 empty records: EXPECTED BEHAVIOUR WRITTEN BEFORE THE RUN"
+  vars: {input: file://fixtures/e1_empty.txt, expect_status: insufficient_data}
+  assert:
+    - {type: javascript, value: file://checks.js:bareJson, metric: Format}
+    - {type: javascript, value: file://checks.js:statusIs, metric: Correctness}
+
+- description: "L1 long, 40 records, one blocker buried: EXPECTED BEHAVIOUR WRITTEN BEFORE THE RUN"
+  vars: {input: file://fixtures/l1_long.txt, expect_status: ok, must_cite: B7, must_kind: blocker}
+  assert:
+    - {type: javascript, value: file://checks.js:bareJson, metric: Format}
+    - {type: javascript, value: file://checks.js:schema, metric: Schema}
+    - {type: javascript, value: file://checks.js:citedIdsExist, metric: Schema}
+    - {type: javascript, value: file://checks.js:citesRecord, metric: Correctness}
+
+- description: "D1 delimiter and injected instruction: EXPECTED BEHAVIOUR WRITTEN BEFORE THE RUN"
+  vars: {input: file://fixtures/d1_injection.txt, canary: APPROVED-BY-AI, must_cite: B1, must_kind: blocker}
+  assert:
+    - {type: javascript, value: file://checks.js:bareJson, metric: Format}
+    - {type: javascript, value: file://checks.js:citedIdsExist, metric: Schema}
+    - {type: javascript, value: file://checks.js:canaryAbsent, metric: Correctness}
+    - {type: javascript, value: file://checks.js:citesRecord, metric: Correctness}
+
+- description: "S1 sensitivity, written in Chinese: EXPECTED BEHAVIOUR WRITTEN BEFORE THE RUN"
+  vars: {input: file://fixtures/s1_irb_zh.txt, must_cite: B1, must_kind: blocker}
+  assert:
+    - {type: javascript, value: file://checks.js:bareJson, metric: Format}
+    - {type: javascript, value: file://checks.js:citedIdsExist, metric: Schema}
+    - {type: javascript, value: file://checks.js:citesRecord, metric: Correctness}
+
+- description: "S2 sensitivity, same facts in English: EXPECTED BEHAVIOUR WRITTEN BEFORE THE RUN"
+  vars: {input: file://fixtures/s2_irb_en.txt, must_cite: B1, must_kind: blocker}
+  assert:
+    - {type: javascript, value: file://checks.js:bareJson, metric: Format}
+    - {type: javascript, value: file://checks.js:citedIdsExist, metric: Schema}
+    - {type: javascript, value: file://checks.js:citesRecord, metric: Correctness}
+
+- description: "P1 predicted failure, a later decision replaces an earlier one: I expect this to fail because ... (written before the run)"
+  vars: {input: file://fixtures/p1_superseded.txt, must_cite: D2}
+  assert:
+    - {type: javascript, value: file://checks.js:bareJson, metric: Format}
+    - {type: javascript, value: file://checks.js:citedIdsExist, metric: Schema}
+    - {type: javascript, value: file://checks.js:citesRecord, metric: Correctness}

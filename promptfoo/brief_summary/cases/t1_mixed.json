@@ -1,0 +1,34 @@
+[
+ {
+  "id": "P1",
+  "type": "progress",
+  "date": "2026-11-16",
+  "author_role": "student",
+  "goal": "文獻回顧",
+  "text": "完成 12 篇論文的比較表，整理出三類主要方法。"
+ },
+ {
+  "id": "B1",
+  "type": "blocker",
+  "date": "2026-11-18",
+  "author_role": "student",
+  "goal": "實驗",
+  "text": "在等實驗室的 GPU 額度，訓練還沒開始。"
+ },
+ {
+  "id": "A1",
+  "type": "action",
+  "date": "2026-11-12",
+  "author_role": "student",
+  "goal": "實驗",
+  "text": "準備資料前處理腳本，期限 11/20。"
+ },
+ {
+  "id": "D1",
+  "type": "decision",
+  "date": "2026-11-10",
+  "author_role": "advisor",
+  "goal": "實驗",
+  "text": "上次會議決定先用小資料集跑 baseline。"
+ }
+]

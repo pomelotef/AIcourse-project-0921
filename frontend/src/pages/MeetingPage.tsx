@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { api } from '../api'
 import { useAuth } from '../auth'
 import { ActionForm, ActionList } from '../components/actions'
+import { AiSummary } from '../components/AiSummary'
 import { BlockerList, OutcomeCard, UpdateCard } from '../components/records'
 import { Card, CategoryBadge, Empty, ErrorBox, Loading, Multiline } from '../components/ui'
 import type { Action, Blocker, Goal, Meeting, Outcome, Project, Update, UserRef } from '../types'
@@ -73,6 +74,7 @@ export default function MeetingPage() {
               ? `這是此專案第一次 ${categoryText(meeting)}，沒有先前的同分類 meeting；以下列出到本次為止的進度、blocker 與未完成待辦。`
               : <>比較範圍：上次同分類 meeting <Link to={`/meetings/${b.previous_meeting!.id}`}>{b.previous_meeting!.title}</Link>（{fmtDate(b.window.start)}）之後到本次 meeting。</>}
           </p>
+          <AiSummary key={`${id}-${memberId}`} meetingId={id} memberId={memberId} />
           <div className="grid-2">
             <Card title="上次 Meeting 的承諾">
               {b.is_first_meeting ? <Empty>無先前紀錄</Empty> : (

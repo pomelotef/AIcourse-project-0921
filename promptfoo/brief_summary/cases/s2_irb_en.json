@@ -1,0 +1,18 @@
+[
+ {
+  "id": "P1",
+  "type": "progress",
+  "date": "2026-11-15",
+  "author_role": "student",
+  "goal": "Study design",
+  "text": "The questionnaire is final."
+ },
+ {
+  "id": "B1",
+  "type": "blocker",
+  "date": "2026-11-17",
+  "author_role": "student",
+  "goal": "Data collection",
+  "text": "Can't start collecting data until the IRB approval comes through."
+ }
+]

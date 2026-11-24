@@ -198,3 +198,11 @@ details summary { cursor: pointer; font-size: .88rem; color: var(--accent); marg
 .auth-page { min-height: 100vh; display: grid; place-items: center; padding: 16px; }
 .auth-box { width: 100%; max-width: 360px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
 .auth-box form { display: flex; flex-direction: column; gap: .7rem; margin: 1rem 0 .6rem; }
+
+/* ---------- AI summary ---------- */
+.ai-summary { border-left: 3px solid var(--accent); }
+.ai-points { list-style: none; padding: 0; margin: .4rem 0 0; display: grid; gap: .55rem; }
+.badge.ai-blocker { background: var(--danger-soft); color: var(--danger); }
+.badge.ai-decision_needed { background: var(--warn-soft); color: var(--warn); }
+.badge.ai-follow_up { background: var(--accent-soft); color: var(--accent); }
+.badge.ai-progress { background: var(--ok-soft); color: var(--ok); }
