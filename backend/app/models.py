@@ -278,3 +278,25 @@ class ActivityEvent(Base):
     # When set, only this user may see the event (e.g. events about a private goal).
     private_to: Mapped[int | None] = mapped_column(ForeignKey("users.id"), nullable=True)
     created_at: Mapped[datetime] = mapped_column(UTCDateTime, default=utcnow, index=True)
+
+
+class Notification(Base):
+    """One user's bell entry for one thing (a goal, an action, an outcome ...), like a GitHub thread.
+
+    A new event about the same thing moves this row to the latest event and marks it unread again
+    instead of adding another row; the full history stays on the timeline. Rules live in notify.py.
+    """
+
+    __tablename__ = "notifications"
+    __table_args__ = (UniqueConstraint("user_id", "entity_type", "entity_id"),)
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    entity_type: Mapped[str] = mapped_column(String(20))
+    entity_id: Mapped[int] = mapped_column(Integer)
+    # The latest event about this thing; the bell shows its summary.
+    event_id: Mapped[int] = mapped_column(ForeignKey("activity_events.id", ondelete="CASCADE"))
+    # Copied from the event so the bell can hide projects the user has since left without a join.
+    project_id: Mapped[int] = mapped_column(ForeignKey("projects.id", ondelete="CASCADE"), index=True)
+    read_at: Mapped[datetime | None] = mapped_column(UTCDateTime, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(UTCDateTime, default=utcnow, index=True)

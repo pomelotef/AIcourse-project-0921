@@ -33,6 +33,7 @@ from .models import (
     Meeting,
     MeetingOutcome,
     MeetingParticipant,
+    Notification,
     OutcomeComment,
     PrivateNote,
     ProgressUpdate,
@@ -111,6 +112,8 @@ def _goal_is_private(obj: Goal) -> bool:
 
 
 def _touches_for(obj, deleted: bool) -> list[Touch]:
+    if isinstance(obj, Notification):  # the bell: only its owner
+        return [("project", obj.project_id, obj.user_id)]
     if isinstance(obj, PrivateNote):
         return [("project", obj.project_id, obj.author_id)]
     if isinstance(obj, ProgressUpdate):
