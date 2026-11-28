@@ -22,6 +22,11 @@ class AnthropicClient:
         message = self._client.messages.create(
             model=self.model,
             max_tokens=self.max_tokens,
+            # Haiku 5.5 thinks by default and can spend all of max_tokens on thinking, leaving
+            # no text, so every summary came back "unavailable". The summary only reorganises
+            # records into fixed JSON, so thinking is turned off. Allowed at effort high or below
+            # (the default is medium); a higher effort would make this request fail with a 400.
+            thinking={"type": "disabled"},
             system=system,
             messages=[{"role": "user", "content": user}],
         )
