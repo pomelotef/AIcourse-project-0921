@@ -8,7 +8,7 @@
 | Input | Exactly the Brief's records, so the same permission rules apply: published updates (P), open blockers (B, as blockers), blockers resolved in the window (B, as progress), previous commitments and carried-over actions with their state (A), decisions of the previous meeting (D). The most recent 40, each cut to 400 characters. Only the author's role is sent, never names or emails. Record text is untrusted data. |
 | Output | One JSON object: `status` (`ok` or `insufficient_data`), `summary`, `points` (`kind`, `text`, `record_ids`). The endpoint adds `records`, a label for every cited ID. |
 | Checks in code | `validate()`: bare JSON, allowed values, at most 6 points, length limits, and every cited ID must be one of the input records. One retry with the problems listed; after that the page says the summary is unavailable and the Brief stays as it is. A Brief with no records never reaches the model. |
-| Known limits | The validator can prove that a cited record exists, not that the sentence says what the record says. The meeting agenda is not sent yet. Untested so far: records in mixed languages within one meeting, more than 40 records, and models other than the default. |
-| Tests | Layer 1: `backend/tests/test_brief_summary.py` and `backend/tests/test_ai_summary_api.py` (fake model, run in CI). Layer 2: `promptfoo/brief_summary/` (real model, run by hand with `--repeat 3`). |
-| Owner | (name) |
-| Last updated | (date) |
+| Known limits | The validator can prove that a cited record exists, not that the sentence says what the record says. The meeting agenda is not sent yet. Only the newest 40 records by date are sent, so an open blocker older than all of them never reaches the model and cannot appear in the summary (case L2); the Brief itself still lists it. Untested so far: records in mixed languages within one meeting, and models other than the default. |
+| Tests | Layer 1: `backend/tests/test_brief_summary.py` and `backend/tests/test_ai_summary_api.py` (fake model, run in CI). Layer 2: `promptfoo/brief_summary/` (10 cases, real model, run by hand with `--repeat 3`; results in PR #26). |
+| Owner | 陳宥丞 (GitHub: pomelotef) |
+| Last updated | 2026-11-28 |

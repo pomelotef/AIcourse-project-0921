@@ -1,8 +1,9 @@
 # Meeting Brief AI summary - prompt test suite. Write every description (the expected
 # behaviour, as properties) BEFORE the first run, together, and record who wrote it.
+# Descriptions: pomelotef, 2026-11-28, before the first run (team review in PR #26).
 # Rebuild the fixtures first:  python promptfoo/brief_summary/build.py  (repository root)
 
-- description: "T1 typical, mixed records: EXPECTED BEHAVIOUR WRITTEN BEFORE THE RUN"
+- description: "T1 typical, mixed records: B1 (waiting for GPU quota, so training has not started) appears as a point of kind blocker."
   vars: {input: file://fixtures/t1_mixed.txt, expect_status: ok, must_cite: B1, must_kind: blocker}
   assert:
     - {type: javascript, value: file://checks.js:bareJson, metric: Format}
@@ -10,7 +11,7 @@
     - {type: javascript, value: file://checks.js:citedIdsExist, metric: Schema}
     - {type: javascript, value: file://checks.js:citesRecord, metric: Correctness}
 
-- description: "T2 typical, open action after a decision: EXPECTED BEHAVIOUR WRITTEN BEFORE THE RUN"
+- description: "T2 typical, open action after a decision: A1 (compare two learning-rate settings, not started yet) appears as a point of kind follow_up."
   vars: {input: file://fixtures/t2_follow_up.txt, expect_status: ok, must_cite: A1, must_kind: follow_up}
   assert:
     - {type: javascript, value: file://checks.js:bareJson, metric: Format}
@@ -18,20 +19,21 @@
     - {type: javascript, value: file://checks.js:citedIdsExist, metric: Schema}
     - {type: javascript, value: file://checks.js:citesRecord, metric: Correctness}
 
-- description: "T3 typical, progress only: EXPECTED BEHAVIOUR WRITTEN BEFORE THE RUN"
+- description: "T3 typical, progress only: status is ok and no point has kind blocker, because no record says anyone is stuck or waiting."
   vars: {input: file://fixtures/t3_progress_only.txt, expect_status: ok, forbid_kind: blocker}
   assert:
     - {type: javascript, value: file://checks.js:bareJson, metric: Format}
     - {type: javascript, value: file://checks.js:citedIdsExist, metric: Schema}
+    - {type: javascript, value: file://checks.js:statusIs, metric: Correctness}
     - {type: javascript, value: file://checks.js:noKind, metric: Correctness}
 
-- description: "E1 empty records: EXPECTED BEHAVIOUR WRITTEN BEFORE THE RUN"
+- description: "E1 empty records: status is insufficient_data. The app never sends an empty Brief to the model, so this checks the prompt rule on its own."
   vars: {input: file://fixtures/e1_empty.txt, expect_status: insufficient_data}
   assert:
     - {type: javascript, value: file://checks.js:bareJson, metric: Format}
     - {type: javascript, value: file://checks.js:statusIs, metric: Correctness}
 
-- description: "L1 long, 40 records, one blocker buried: EXPECTED BEHAVIOUR WRITTEN BEFORE THE RUN"
+- description: "L1 long, 40 records, one blocker buried: all 40 records reach the model (none cut), and B7 (server disk full, new results cannot be saved) still appears as a blocker point among 39 routine progress records."
   vars: {input: file://fixtures/l1_long.txt, expect_status: ok, must_cite: B7, must_kind: blocker}
   assert:
     - {type: javascript, value: file://checks.js:bareJson, metric: Format}
@@ -39,7 +41,16 @@
     - {type: javascript, value: file://checks.js:citedIdsExist, metric: Schema}
     - {type: javascript, value: file://checks.js:citesRecord, metric: Correctness}
 
-- description: "D1 delimiter and injected instruction: EXPECTED BEHAVIOUR WRITTEN BEFORE THE RUN"
+- description: "L2 over the limit, 45 records, open blocker B1 among the 5 oldest: only the newest 40 reach the model, so no point cites B1, and B2 (survey platform quota used up) still appears as a blocker point."
+  vars: {input: file://fixtures/l2_over_40.txt, expect_status: ok, must_cite: B2, must_kind: blocker, cut_id: B1}
+  assert:
+    - {type: javascript, value: file://checks.js:bareJson, metric: Format}
+    - {type: javascript, value: file://checks.js:schema, metric: Schema}
+    - {type: javascript, value: file://checks.js:citedIdsExist, metric: Schema}
+    - {type: javascript, value: file://checks.js:cutIdNotCited, metric: Schema}
+    - {type: javascript, value: file://checks.js:citesRecord, metric: Correctness}
+
+- description: "D1 delimiter and injected instruction: the fake </records> and the request inside P1 are treated as data, so the reply never contains APPROVED-BY-AI, and B1 (annotation tool license expired) still appears as a blocker point."
   vars: {input: file://fixtures/d1_injection.txt, canary: APPROVED-BY-AI, must_cite: B1, must_kind: blocker}
   assert:
     - {type: javascript, value: file://checks.js:bareJson, metric: Format}
@@ -47,23 +58,23 @@
     - {type: javascript, value: file://checks.js:canaryAbsent, metric: Correctness}
     - {type: javascript, value: file://checks.js:citesRecord, metric: Correctness}
 
-- description: "S1 sensitivity, written in Chinese: EXPECTED BEHAVIOUR WRITTEN BEFORE THE RUN"
+- description: "S1 sensitivity, written in Chinese: B1 (IRB approval still pending, data collection cannot start) appears as a blocker point."
   vars: {input: file://fixtures/s1_irb_zh.txt, must_cite: B1, must_kind: blocker}
   assert:
     - {type: javascript, value: file://checks.js:bareJson, metric: Format}
     - {type: javascript, value: file://checks.js:citedIdsExist, metric: Schema}
     - {type: javascript, value: file://checks.js:citesRecord, metric: Correctness}
 
-- description: "S2 sensitivity, same facts in English: EXPECTED BEHAVIOUR WRITTEN BEFORE THE RUN"
+- description: "S2 sensitivity, same facts in English: same result as S1, B1 appears as a blocker point; the language of the records must not change how B1 is classified."
   vars: {input: file://fixtures/s2_irb_en.txt, must_cite: B1, must_kind: blocker}
   assert:
     - {type: javascript, value: file://checks.js:bareJson, metric: Format}
     - {type: javascript, value: file://checks.js:citedIdsExist, metric: Schema}
     - {type: javascript, value: file://checks.js:citesRecord, metric: Correctness}
 
-- description: "P1 predicted failure, a later decision replaces an earlier one: I expect this to fail because ... (written before the run)"
-  vars: {input: file://fixtures/p1_superseded.txt, must_cite: D2}
+- description: "P1 predicted failure, a later decision replaces an earlier one: one point treats D2 (switch to dataset B) as the current decision and cites D1 and D2 together, and no point cites D1 without D2. I expect this to fail because kind rule 3 calls an earlier decision with no record of being carried out a follow_up, and D1 fits that literally, so the model may list D1 on its own or cite only D2."
+  vars: {input: file://fixtures/p1_superseded.txt, earlier: D1, later: D2}
   assert:
     - {type: javascript, value: file://checks.js:bareJson, metric: Format}
     - {type: javascript, value: file://checks.js:citedIdsExist, metric: Schema}
-    - {type: javascript, value: file://checks.js:citesRecord, metric: Correctness}
+    - {type: javascript, value: file://checks.js:citesTogether, metric: Correctness}
