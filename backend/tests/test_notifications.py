@@ -89,11 +89,34 @@ def test_comment_reaches_author_and_earlier_commenters(lab):
 
 
 def test_added_member_is_told(make_user, lab):
-    make_user("dan")
+    dan, _ = make_user("dan")
+    _clear(lab)
     lab["prof"].post(f"/api/projects/{lab['pid']}/members", {"email": "dan@test.local", "role": "student"},
                      status=201)
-    # alice was added in the fixture: her bell has that notification
-    assert any(n["event_type"] == "member_added" for n in _bell(lab["alice"])["items"])
+    bell = _bell(dan)
+    assert bell["unread"] == 1
+    assert bell["items"][0]["event_type"] == "member_added"
+    assert bell["items"][0]["project"]["id"] == lab["pid"]
+    # only the new member hears about it, not the members already there (nor the advisor who added him)
+    assert _unread(lab["alice"]) == 0
+    assert _unread(lab["bob"]) == 0
+    assert _unread(lab["prof"]) == 0
+
+
+def test_blocker_reaches_advisors_and_goal_assignee(lab):
+    goal = _goal(lab, who="alice")
+    _clear(lab)
+    lab["bob"].post(f"/api/goals/{goal['id']}/blockers", {"title": "GPU quota", "description": ""}, status=201)
+
+    for who in ("prof", "alice"):  # the advisor and the goal's assignee
+        bell = _bell(lab[who])
+        assert bell["unread"] == 1
+        item = bell["items"][0]
+        assert item["event_type"] == "blocker_opened"
+        assert item["actor"]["name"] == "bob"
+        assert item["link"] == f"/goals/{goal['id']}"  # the blocker's goal, not the blocker id
+    assert _unread(lab["bob"]) == 0  # the one who did it
+    assert _unread(lab["eve"]) == 0  # not a member
 
 
 # ---------------------------------------------------------------- what must not happen
