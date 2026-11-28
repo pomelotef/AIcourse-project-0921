@@ -1,5 +1,6 @@
 import { NavLink, Route, Routes } from 'react-router-dom'
 import { AuthProvider, useAuth } from './auth'
+import { NotificationBell } from './components/NotificationBell'
 import { Loading } from './components/ui'
 import { LiveIndicator, LiveProvider } from './live'
 import GoalPage from './pages/GoalPage'
@@ -34,6 +35,7 @@ function Shell() {
           </nav>
           <div className="user">
             <LiveIndicator />
+            <NotificationBell />
             <span className="muted">{user.name}</span>
             <button className="ghost small" onClick={() => void logout()}>登出</button>
           </div>

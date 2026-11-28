@@ -94,9 +94,10 @@ def add_member(project_id: int, body: MemberIn, db: Session = Depends(get_db), u
     if exists:
         raise HTTPException(409, "此成員已在專案中")
     db.add(ProjectMember(project_id=project_id, user_id=target.id, role=body.role))
+    db.flush()
     events.record(
         db, project_id=project_id, actor_id=user.id, event_type="member_added", entity_type="project",
-        entity_id=project_id, summary=f"加入成員 {target.name}（{'指導者' if body.role == 'advisor' else '學生'}）",
+        entity_id=project_id, subject_user_id=target.id, summary=f"加入成員 {target.name}（{'指導者' if body.role == 'advisor' else '學生'}）",
     )
     db.commit()
     return _members(db, project_id)

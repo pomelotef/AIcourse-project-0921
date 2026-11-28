@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 
+from . import notify
 from .models import ActivityEvent, Goal, utcnow
 
 
@@ -20,8 +21,14 @@ def record(
     goal: Goal | None = None,
     meeting_category: str | None = None,
     private_to: int | None = None,
+    subject_user_id: int | None = None,
     at=None,
 ) -> ActivityEvent:
+    """Add a timeline event and the notifications it causes (see notify.py).
+
+    subject_user_id: the user the event is about when that is not the entity itself
+    (e.g. the member who was added to a project).
+    """
     if goal is not None and goal.visibility == "private":
         private_to = goal.created_by
     ev = ActivityEvent(
@@ -37,4 +44,6 @@ def record(
         created_at=at or utcnow(),
     )
     db.add(ev)
+    db.flush()
+    notify.fan_out(db, ev, subject_user_id)
     return ev
