@@ -75,3 +75,7 @@
 **What:** AlanCheng1000 is the code steward for this PR (Commit 3bf4669).
 **Why:** Volunteered
 
+## 2026-11-28 — AI 摘要呼叫模型時關閉 thinking
+**What:** `AnthropicClient.complete()` 送出時加上 `thinking={"type": "disabled"}`，`max_tokens` 維持 800。
+**Why:** `claude-haiku-5-5` 預設會先 thinking，用 demo 資料實測時 800 tokens 全部用在 thinking，沒有任何文字回覆，所以每次摘要都是 `unavailable`。摘要只是把紀錄整理成固定格式的 JSON，不需要推理；關閉後實測輸出約 600 tokens，並通過 `validate()`。
+**Alternative rejected:** 調高 `max_tokens`（thinking 長度沒有上限，仍可能用光，成本與等待時間也會增加）；調低 effort（模型仍會 thinking，不保證留下足夠的空間給回覆）。Haiku 5.5 只有在 effort 為 high 以下時才能關閉 thinking，目前使用預設的 medium。
