@@ -75,3 +75,6 @@
 **What:** AlanCheng1000 is the code steward for this PR (Commit 3bf4669).
 **Why:** Volunteered
 
+## 2026-11-28 — code steward
+**What:** BrotherHong is the code steward from 2026-11-28 until merge day. During this period only the steward approves PRs and merges them into main. Open PRs at handoff: #26 (pomelotef, AI summary frontend and promptfoo suite, review required) and #27 (SamTsai0316, notification bell, changes requested, waiting for the author).
+**Why:** Each member must serve as steward at least twice; BrotherHong has not served yet.
