@@ -1,0 +1,34 @@
+[
+ {
+  "id": "D1",
+  "type": "decision",
+  "date": "2026-11-03",
+  "author_role": "advisor",
+  "goal": "論文寫作",
+  "text": "決定 11/17 前交 related work 初稿。"
+ },
+ {
+  "id": "P1",
+  "type": "progress",
+  "date": "2026-11-15",
+  "author_role": "student",
+  "goal": "論文寫作",
+  "text": "related work 初稿完成，已放到共享資料夾。"
+ },
+ {
+  "id": "P2",
+  "type": "progress",
+  "date": "2026-11-16",
+  "author_role": "student",
+  "goal": "實驗",
+  "text": "baseline 準確率 71.2%。"
+ },
+ {
+  "id": "A1",
+  "type": "action",
+  "date": "2026-11-09",
+  "author_role": "student",
+  "goal": "實驗",
+  "text": "比較兩種學習率設定，尚未開始。"
+ }
+]

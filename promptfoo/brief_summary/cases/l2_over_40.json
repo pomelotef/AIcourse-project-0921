@@ -1,0 +1,362 @@
+[
+ {
+  "id": "P6",
+  "type": "progress",
+  "date": "2026-10-25",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "更新程式註解（第 6 項）。"
+ },
+ {
+  "id": "P7",
+  "type": "progress",
+  "date": "2026-10-26",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "重跑前處理（第 7 項）。"
+ },
+ {
+  "id": "P8",
+  "type": "progress",
+  "date": "2026-10-27",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "檢查資料格式（第 8 項）。"
+ },
+ {
+  "id": "P9",
+  "type": "progress",
+  "date": "2026-10-28",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "整理圖表（第 9 項）。"
+ },
+ {
+  "id": "P10",
+  "type": "progress",
+  "date": "2026-10-29",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "讀一篇相關論文（第 10 項）。"
+ },
+ {
+  "id": "P11",
+  "type": "progress",
+  "date": "2026-10-30",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "整理實驗紀錄（第 11 項）。"
+ },
+ {
+  "id": "P12",
+  "type": "progress",
+  "date": "2026-10-31",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "更新程式註解（第 12 項）。"
+ },
+ {
+  "id": "P13",
+  "type": "progress",
+  "date": "2026-11-01",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "重跑前處理（第 13 項）。"
+ },
+ {
+  "id": "P14",
+  "type": "progress",
+  "date": "2026-11-02",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "檢查資料格式（第 14 項）。"
+ },
+ {
+  "id": "P15",
+  "type": "progress",
+  "date": "2026-11-03",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "整理圖表（第 15 項）。"
+ },
+ {
+  "id": "P16",
+  "type": "progress",
+  "date": "2026-11-04",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "讀一篇相關論文（第 16 項）。"
+ },
+ {
+  "id": "P17",
+  "type": "progress",
+  "date": "2026-11-05",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "整理實驗紀錄（第 17 項）。"
+ },
+ {
+  "id": "P18",
+  "type": "progress",
+  "date": "2026-11-06",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "更新程式註解（第 18 項）。"
+ },
+ {
+  "id": "P19",
+  "type": "progress",
+  "date": "2026-11-07",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "重跑前處理（第 19 項）。"
+ },
+ {
+  "id": "P20",
+  "type": "progress",
+  "date": "2026-11-08",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "檢查資料格式（第 20 項）。"
+ },
+ {
+  "id": "P21",
+  "type": "progress",
+  "date": "2026-11-09",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "整理圖表（第 21 項）。"
+ },
+ {
+  "id": "P22",
+  "type": "progress",
+  "date": "2026-11-10",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "讀一篇相關論文（第 22 項）。"
+ },
+ {
+  "id": "P23",
+  "type": "progress",
+  "date": "2026-11-11",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "整理實驗紀錄（第 23 項）。"
+ },
+ {
+  "id": "P24",
+  "type": "progress",
+  "date": "2026-11-12",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "更新程式註解（第 24 項）。"
+ },
+ {
+  "id": "P25",
+  "type": "progress",
+  "date": "2026-11-13",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "重跑前處理（第 25 項）。"
+ },
+ {
+  "id": "B1",
+  "type": "blocker",
+  "date": "2026-10-20",
+  "author_role": "student",
+  "goal": "資料收集",
+  "text": "合作單位的資料使用協議還沒簽，拿不到原始資料，資料收集停擺。"
+ },
+ {
+  "id": "P26",
+  "type": "progress",
+  "date": "2026-11-14",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "檢查資料格式（第 26 項）。"
+ },
+ {
+  "id": "P27",
+  "type": "progress",
+  "date": "2026-11-15",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "整理圖表（第 27 項）。"
+ },
+ {
+  "id": "P28",
+  "type": "progress",
+  "date": "2026-11-16",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "讀一篇相關論文（第 28 項）。"
+ },
+ {
+  "id": "P29",
+  "type": "progress",
+  "date": "2026-11-17",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "整理實驗紀錄（第 29 項）。"
+ },
+ {
+  "id": "P30",
+  "type": "progress",
+  "date": "2026-11-18",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "更新程式註解（第 30 項）。"
+ },
+ {
+  "id": "P2",
+  "type": "progress",
+  "date": "2026-10-21",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "檢查資料格式（第 2 項）。"
+ },
+ {
+  "id": "B2",
+  "type": "blocker",
+  "date": "2026-11-14",
+  "author_role": "student",
+  "goal": "資料收集",
+  "text": "問卷平台的免費額度用完，第二批問卷發不出去。"
+ },
+ {
+  "id": "P32",
+  "type": "progress",
+  "date": "2026-10-26",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "檢查資料格式（第 32 項）。"
+ },
+ {
+  "id": "P33",
+  "type": "progress",
+  "date": "2026-10-27",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "整理圖表（第 33 項）。"
+ },
+ {
+  "id": "P34",
+  "type": "progress",
+  "date": "2026-10-28",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "讀一篇相關論文（第 34 項）。"
+ },
+ {
+  "id": "P35",
+  "type": "progress",
+  "date": "2026-10-29",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "整理實驗紀錄（第 35 項）。"
+ },
+ {
+  "id": "P3",
+  "type": "progress",
+  "date": "2026-10-22",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "整理圖表（第 3 項）。"
+ },
+ {
+  "id": "P4",
+  "type": "progress",
+  "date": "2026-10-23",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "讀一篇相關論文（第 4 項）。"
+ },
+ {
+  "id": "P36",
+  "type": "progress",
+  "date": "2026-10-30",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "更新程式註解（第 36 項）。"
+ },
+ {
+  "id": "P37",
+  "type": "progress",
+  "date": "2026-10-31",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "重跑前處理（第 37 項）。"
+ },
+ {
+  "id": "P38",
+  "type": "progress",
+  "date": "2026-11-01",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "檢查資料格式（第 38 項）。"
+ },
+ {
+  "id": "P39",
+  "type": "progress",
+  "date": "2026-11-02",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "整理圖表（第 39 項）。"
+ },
+ {
+  "id": "P40",
+  "type": "progress",
+  "date": "2026-11-03",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "讀一篇相關論文（第 40 項）。"
+ },
+ {
+  "id": "P5",
+  "type": "progress",
+  "date": "2026-10-24",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "整理實驗紀錄（第 5 項）。"
+ },
+ {
+  "id": "P41",
+  "type": "progress",
+  "date": "2026-11-04",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "整理實驗紀錄（第 41 項）。"
+ },
+ {
+  "id": "P42",
+  "type": "progress",
+  "date": "2026-11-05",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "更新程式註解（第 42 項）。"
+ },
+ {
+  "id": "P43",
+  "type": "progress",
+  "date": "2026-11-06",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "重跑前處理（第 43 項）。"
+ },
+ {
+  "id": "P44",
+  "type": "progress",
+  "date": "2026-11-07",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "檢查資料格式（第 44 項）。"
+ },
+ {
+  "id": "P45",
+  "type": "progress",
+  "date": "2026-11-08",
+  "author_role": "student",
+  "goal": "日常工作",
+  "text": "整理圖表（第 45 項）。"
+ }
+]

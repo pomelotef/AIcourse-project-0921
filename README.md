@@ -111,3 +111,12 @@ $env:PW_CHANNEL = "msedge"; npx playwright test
 - [DECISION.md](DECISION.md)：重要決策紀錄
 - [AI_Usage.md](AI_Usage.md)：AI 工具使用規範
 - [CONTRIBUTORS.md](CONTRIBUTORS.md)
+
+## AI 會前摘要（選用）
+
+Meeting 頁面上的「產生 AI 摘要」會把 Meeting Brief 的紀錄交給模型，產生一段摘要與最多 6 個討論重點，每個重點都標出依據的紀錄。
+
+- 預設關閉：後端的環境變數有 `ANTHROPIC_API_KEY` 才會啟用；`LABPULSE_AI_MODEL` 可換模型（預設 `claude-haiku-5-5`）。金鑰只放在 shell，不要寫進任何檔案。
+- 隱私：只送 Brief 本來就顯示給全體成員的紀錄（已發布的進度、共享目標的 blocker、待辦、上次決策），不送草稿、私人筆記、私人目標，也不送姓名，只送角色。
+- 程式：`backend/app/ai/`（prompt、模板、validator、重試與退回）、`backend/app/routers/ai_summary.py`（endpoint）、`frontend/src/components/AiSummary.tsx`。
+- 測試：`backend/tests/test_brief_summary.py`、`backend/tests/test_ai_summary_api.py` 用假模型，CI 會跑；`promptfoo/brief_summary/` 是用真模型的 prompt 測試套件，說明見 `docs/ai/brief_summary_prompt_card.md`。

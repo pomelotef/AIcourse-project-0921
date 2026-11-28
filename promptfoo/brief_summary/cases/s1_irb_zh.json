@@ -1,0 +1,18 @@
+[
+ {
+  "id": "P1",
+  "type": "progress",
+  "date": "2026-11-15",
+  "author_role": "student",
+  "goal": "研究設計",
+  "text": "問卷題目定稿。"
+ },
+ {
+  "id": "B1",
+  "type": "blocker",
+  "date": "2026-11-17",
+  "author_role": "student",
+  "goal": "資料收集",
+  "text": "IRB 審查還沒通過，不能開始收資料。"
+ }
+]

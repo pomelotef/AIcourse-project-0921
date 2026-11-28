@@ -1,0 +1,26 @@
+[
+ {
+  "id": "D1",
+  "type": "decision",
+  "date": "2026-11-03",
+  "author_role": "advisor",
+  "goal": "實驗",
+  "text": "決定使用資料集 A。"
+ },
+ {
+  "id": "D2",
+  "type": "decision",
+  "date": "2026-11-17",
+  "author_role": "advisor",
+  "goal": "實驗",
+  "text": "資料集 A 授權有問題，改用資料集 B。"
+ },
+ {
+  "id": "P1",
+  "type": "progress",
+  "date": "2026-11-18",
+  "author_role": "student",
+  "goal": "實驗",
+  "text": "開始下載資料集 B。"
+ }
+]

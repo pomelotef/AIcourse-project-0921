@@ -1,0 +1,26 @@
+[
+ {
+  "id": "P1",
+  "type": "progress",
+  "date": "2026-11-14",
+  "author_role": "student",
+  "goal": "資料收集",
+  "text": "完成第一批 200 份問卷的整理。"
+ },
+ {
+  "id": "P2",
+  "type": "progress",
+  "date": "2026-11-16",
+  "author_role": "student",
+  "goal": "資料收集",
+  "text": "第二批問卷已回收 150 份。"
+ },
+ {
+  "id": "P3",
+  "type": "progress",
+  "date": "2026-11-18",
+  "author_role": "student",
+  "goal": "分析",
+  "text": "寫好描述統計的程式，結果已存到共享資料夾。"
+ }
+]

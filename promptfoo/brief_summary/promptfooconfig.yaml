@@ -1,0 +1,11 @@
+description: "LabPulse - Meeting Brief AI summary prompt"
+prompts:
+  - file://prompts/brief_summary.json
+providers:
+  - id: anthropic:messages:claude-haiku-5-5
+    config:
+      max_tokens: 800
+      # Same call as the app (backend/app/ai/llm.py, PR #29): Haiku 5.5 thinks by default and can
+      # spend all 800 tokens on it, leaving no reply. Accepted at effort high or below (default).
+      thinking: {type: disabled}
+tests: file://tests.yaml
